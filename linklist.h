@@ -42,16 +42,56 @@ protected:
         ++len;
     }
 
+    void iswap(linklist &&l)
+    {
+        std::swap(head, l.head);
+        std::swap(tail, l.tail);
+        std::swap(len, l.len);
+    }
+
 public:
 
-    linklist()
+    linklist() noexcept
     {
         init();
     }
 
-    virtual ~linklist()
+    linklist (linklist &l) noexcept : linklist()
+    {
+        nodeptr cur = l.head.next;
+        while (cur != &l.tail) {
+            push_back(cur->val);
+            cur = cur->next;
+        }
+        return this;
+    }
+
+    linklist (linklist &&l) noexcept : linklist()
+    {
+        iswap(std::move(l));
+    }
+
+    virtual ~linklist noexcept ()
     {
         clear();
+    }
+
+    void push_back(const value_type &v)
+    {
+        insert_after(tail.prior, new node{v});
+    }
+
+    template <typename ...types>
+    void emplace_back(types ...args)
+    {
+        insert_after(tail.prior, new node(args...));
+    }
+
+    void remove (const nodeptr p)
+    {
+        p->prior->next=p->next;
+        p->next->prior=p->prior;
+        delete p;
     }
 
     void clear()
@@ -146,6 +186,14 @@ public:
             iterator temp = (this->x);
             for (int i = 0; i < n; ++i)
                 temp = temp->next;
+            return temp;
+        }
+
+        iterator operator -(int n)
+        {
+            iterator temp = (this->x);
+            for (int i = 0; i < n; ++i)
+                temp = temp->prior;
             return temp;
         }
 
