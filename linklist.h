@@ -1,5 +1,4 @@
 #pragma once
-
 #include <iostream>
 
 template <typename _T>
@@ -63,7 +62,6 @@ public:
             push_back(cur->val);
             cur = cur->next;
         }
-        return this;
     }
 
     linklist (linklist &&l) noexcept : linklist()
@@ -71,7 +69,7 @@ public:
         iswap(std::move(l));
     }
 
-    virtual ~linklist noexcept ()
+    virtual ~linklist() noexcept
     {
         clear();
     }
@@ -89,8 +87,8 @@ public:
 
     void remove (const nodeptr p)
     {
-        p->prior->next=p->next;
-        p->next->prior=p->prior;
+        p->prior->next = p->next;
+        p->next->prior = p->prior;
         delete p;
     }
 
@@ -110,11 +108,6 @@ public:
         return len == 0;
     }
 
-    void push_back(const value_type &u)
-    {
-        insert_after(tail.prior, new node{u});
-    }
-
     friend class iterator;
     using range = nodeptr;
 
@@ -129,7 +122,7 @@ public:
 
         iterator(range y = nullptr): x(y) {}
 
-        bool operator !=(const iterator &i)
+        bool operator !=(const iterator i)
         {
             return x != i.x;
         }
