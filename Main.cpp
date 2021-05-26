@@ -1,11 +1,11 @@
 #include <iostream>
 #include <string>
-#include "link_list.h"
-#include "member.h"
+#include "linklist.h"
+#include "employee.h"
 
 int main()
 {
-    InitProg();//Load the init data
+    //InitProg();//Load the init data
     
     return 0;
 }

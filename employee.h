@@ -1,7 +1,8 @@
 #pragma once
-
 #include <iostream>
 #include <string>
+#include "title.h"
+#include "unit.h"
 
 class employee
 {
@@ -13,22 +14,6 @@ protected:
     std::string gender;
     std::string dob;
     std::string doe;
-    unit myunit;
-    title mytitle;
-    //TODO:add the init value of salary
-    const double salary[] {};
-}
+    title _title;
+};
 
-//TODO:finish class unit and kids class
-class unit
-{
-protected:
-
-}
-
-//TODO:finish class title and kids class
-class title
-{
-protected:
-
-}
