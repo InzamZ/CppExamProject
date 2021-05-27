@@ -15,6 +15,11 @@ protected:
 public:
     title (std::string str = "Unknown", value_t sal = 0) : titlename(str), salary(sal) {}
     virtual ~title () {}
+
+    void update(value_t sal)
+    {
+        salary = sal;
+    }
 };
 
 class Manager : public title

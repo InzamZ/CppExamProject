@@ -110,6 +110,14 @@ public:
         return len == 0;
     }
 
+    using callback_t = std::function<void (value_type &)>;
+
+    void traverse (callback_t f)
+    {
+        for (auto it = begin(); it != end(); ++it)
+            f(*it) ;
+    }
+
     friend class iterator;
     using range = nodeptr;
 
@@ -200,6 +208,14 @@ public:
         pointer operator ->() const
         {
             return x;
+        }
+
+        void remove ()
+        {
+            x->prior->next = x->next;
+            x->next->prior = x->prior;
+            delete x->val;
+            delete x;
         }
     };
 
