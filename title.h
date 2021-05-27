@@ -13,13 +13,14 @@ protected:
     std::string titlename;
     value_t salary;
 public:
-    title (std::string str = "Unknown", value_t sal = 0 ) : titlename(str), salary(sal) {}
+    title (std::string str = "Unknown", value_t sal = 0) : titlename(str), salary(sal) {}
     virtual ~title () {}
 };
 
 class Manager : public title
 {
 public:
+    using pointer = Manager*;
     Manager (std::string str = "Manager", value_t sal = 30000 ) : title(str, sal) {}
     ~Manager () {}
 };
@@ -27,6 +28,7 @@ public:
 class HumanResStaff : public title
 {
 public:
+    using pointer = HumanResStaff*;
     HumanResStaff (std::string str = "Human_Resource_Staff", value_t sal = 18000 ) : title(str, sal) {}
     ~HumanResStaff () {}
 
@@ -35,6 +37,7 @@ public:
 class FinanceStaff : public title
 {
 public:
+    using pointer = FinanceStaff*;
     FinanceStaff (std::string str = "Finance_Staff", value_t sal = 17000 ) : title(str, sal) {}
     ~FinanceStaff () {}
 };
@@ -42,6 +45,7 @@ public:
 class SalesStaff : public title
 {
 public:
+    using pointer = SalesStaff*;
     SalesStaff (std::string str = "Sales_Staff", value_t sal = 19000 ) : title(str, sal) {}
     ~SalesStaff () {}
 };
@@ -49,6 +53,7 @@ public:
 class AdminStaff : public title
 {
 public:
-    AdminStaff (std::string str = "Admininstration_Staff", value_t sal = 20000 ) : title(str, sal) {}
+    using pointer = AdminStaff*;
+    AdminStaff (std::string str = "Administration_Staff", value_t sal = 20000 ) : title(str, sal) {}
     ~AdminStaff () {}
 };

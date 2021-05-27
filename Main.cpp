@@ -3,13 +3,10 @@
 #include <string>
 #include "linklist.h"
 #include "employee.h"
-#include "unit.h"
 #include "title.h"
-#include "system.h"
 
 int main()
 {
-    //InitProg();//Load the init data
     linklist<employee::pointer> Employ;
     std::ifstream datafile("employee.dat");
     if (! datafile.is_open()) {
@@ -32,7 +29,7 @@ int main()
         if (titlename == "Administration_Staff")
             _title = dynamic_cast<title::pointer>(new AdminStaff) ;
         employee::pointer temp = new employee{eid, name, gender, dob, doe, unitname, _title};
-        Employ.emplace_back(temp);
+        Employ.push_back(temp);
         datafile >> eid >> name >> gender >> dob >> doe >> unitname >> titlename >> sal;
     }
     while (!datafile.eof());

@@ -16,6 +16,7 @@ protected:
 
         node() {}
         node(value_type u): val(u), next(nullptr), prior(nullptr) {}
+        ~node() {}
 
         template <typename ...types>
         node(types ...args) : val(args...) {}
@@ -98,6 +99,7 @@ public:
         while (p != &tail) {
             q = p;
             p = p->next;
+            delete (q->val);
             delete q;
         }
         init();
