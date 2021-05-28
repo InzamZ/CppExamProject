@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include "employee.h"
 
 template <typename _T>
 class linklist
@@ -20,6 +21,8 @@ protected:
 
         template <typename ...types>
         node(types ...args) : val(args...) {}
+
+        friend class iterator;
     };
 
     using nodeptr = node*;
@@ -111,15 +114,21 @@ public:
     }
 
     using callback_t = std::function<void (value_type &)>;
+    using callback_e = std::function<void (employee &)>;
 
     void traverse (callback_t f)
     {
         for (auto it = begin(); it != end(); ++it)
             f(*it) ;
     }
-
+    void _traverse (callback_e f)
+    {
+        for (auto it = begin(); it != end(); ++it)
+            f((*(*it))) ;
+    }
     friend class iterator;
     using range = nodeptr;
+    friend void sort<linklist<employee *>, std::function<bool(employee *, employee *)> >(linklist<employee *> &a, std::function<bool(employee *, employee *)> b);
 
     class iterator
     {
@@ -186,18 +195,24 @@ public:
 
         iterator operator +(int n)
         {
-            iterator temp = (this->x);
+            auto temp = (this->x);
             for (int i = 0; i < n; ++i)
                 temp = temp->next;
-            return temp;
+            return iterator(temp);
+        }
+
+        iterator operator =(iterator a)
+        {
+            x = a.x;
+            return *this;
         }
 
         iterator operator -(int n)
         {
-            iterator temp = (this->x);
+            auto temp = (this->x);
             for (int i = 0; i < n; ++i)
                 temp = temp->prior;
-            return temp;
+            return iterator(temp);
         }
 
         reference operator *()
@@ -205,7 +220,7 @@ public:
             return x->val;
         }
 
-        pointer operator ->() const
+        constexpr pointer operator ->() const
         {
             return x;
         }
@@ -216,6 +231,17 @@ public:
             x->next->prior = x->prior;
             delete x->val;
             delete x;
+        }
+
+        void _swap(iterator &m)
+        {
+            x->prior->next = m.x;
+            m.x->next->prior = x;
+            x->next = m.x->next;
+            m.x->prior = x->prior;
+            x->prior = m.x;
+            m.x->next = x;
+            x = m.x;
         }
     };
 

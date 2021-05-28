@@ -2,9 +2,8 @@
 #include <iostream>
 #include <iomanip>
 #include <string>
+#include "algorithm.h"
 #include "title.h"
-
-
 
 class employee
 {
@@ -24,7 +23,11 @@ protected:
     title::pointer _title;
     void infor (std::ostream &os) const
     {
-        os << std::setw(15) << eid << std::setw(15) << name << std::setw(15) << gender << std::setw(15) << dob << std::setw(15) << doe << std::setw(30) << unit << std::setw(30) << _title->titlename << std::setw(15) << _title->salary << std::endl;
+        os << '|' << std::setw(15) << eid << '|' << std::setw(15) << name << '|' << std::setw(10) << gender << '|' << std::setw(14) << dob << '|' << std::setw(14) << doe << '|' << std::setw(35) << unit << '|' << std::setw(30) << _title->titlename << '|' << std::setw(10) << _title->salary << '|' << std::endl;
+    }
+    void infor_file (std::ostream &os) const
+    {
+        os << eid << ' '  << name << ' ' << gender << ' ' <<  dob << ' ' <<  doe << ' ' <<  unit << ' ' <<  _title->titlename << ' ' << _title->salary  << std::endl;
     }
 
 public:
@@ -33,14 +36,28 @@ public:
 
     ~employee() {}
 
-    bool cmp_eid(std::string _eid)
+    bool equal_eid(std::string _eid)
     {
-        return _eid==eid;
+        return _eid == eid;
     }
 
-    friend std::ostream &operator<<( std::ostream &os, const employee &D )
+    static bool cmp( const pointer C, const pointer D )
     {
-        D.infor(os);
+        if (C->eid.length() < D->eid.length())
+            return true;
+        if (D->eid.length() < C->eid.length())
+            return false;
+        return C->eid < D->eid;
+    }
+
+    bool cmp_title(std::string _titlename)
+    {
+        return _titlename == _title->titlename;
+    }
+
+    friend std::ostream &operator<<( std::ostream &os, const employee D )
+    {
+        D.infor_file(os);
         return os;
     }
 
@@ -49,5 +66,16 @@ public:
         D->infor(os);
         return os;
     }
+
+    bool operator<( const employee D )
+    {
+        if (D.eid.length() > eid.length())
+            return true;
+        if (D.eid.length() < eid.length())
+            return false;
+        return eid < D.eid;
+    }
+
+    friend class sys;
 };
 

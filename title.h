@@ -9,6 +9,7 @@ public:
     using pointer = title*;
     using refference = title&;
     friend class employee;
+    friend class sys;
 protected:
     std::string titlename;
     value_t salary;
