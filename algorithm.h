@@ -11,26 +11,32 @@ void f()
 {
     typename T::pointer p;
 }
-/*
+
 template <typename range, typename compare>
-void sort(range k, compare fn)
+void sort(range &k, compare fn)
 {
-    auto l = k.begin(), r =k.end();
-    for (auto i = l + 1; i != r; ++i) {
-        auto key = (*i);
-        for (auto j = i - 1;j != k.rend() && (*j) > key){
-            s[j + 1] = s[j];
-            j--;
+    auto l = k.begin(), r = k.end();
+    auto i = l, j = l, m = j;
+    for (i = l + 1; i != r; ++i) {
+        j = i;
+        --j;
+        for (; j != k.rend() && fn(*(j + 1), (*j));) {
+            m = j + 1;
+            // auto temp = (*j);
+            // (*j) = (*m);
+            // (*m) = temp;
+            j._swap(m);
+            --j;
         }
-        s[j + 1] = key;
     }
-}*/
+}
 
 template <typename iterator, typename filter>
-iterator find(iterator first, iterator last, filter fn) {
-    for (auto it=first;it!=last;++it)
-    {
-        if (fn(*it)) return it;
+iterator find(iterator first, iterator last, filter fn)
+{
+    for (auto it = first; it != last; ++it) {
+        if (fn(*it))
+            return it;
     }
     return nullptr;
 }
