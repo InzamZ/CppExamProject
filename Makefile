@@ -1,6 +1,6 @@
 sources = *.cpp
 CXX =g++
-cxxflags = -std=c++20 -Wall -g -fsanitize=address
+cxxflags = -std=c++2a -Wall -g -fsanitize=address
 target = main
 
 all:
